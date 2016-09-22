@@ -57,12 +57,13 @@ Step 1: FYI
 Step 2: Run nmap
 	As above:
 	
-	sudo nmap -sSV -v -T5 -O --osscan-guess 127.0.0.1 -p1-1000 -oX nmap.syn-vers.127.0.0.1
+	sudo nmap -sSV -v -T5 -O --osscan-guess 127.0.0.1 -p- -oX nmap.syn-vers.127.0.0.1
 
 Step 3: Run the analyzer
 	
 	cd nmap
-	./nmapAnalyzer_2.0.py 
+	./nmapAnalyzer_2.0.py
+	
 ```
 ----------------------
 |-- Nmap Analyzer  --|
@@ -92,7 +93,7 @@ Target address: 	127.0.0.1
 Target hostname: 	localhost
 Target OS: 		    Apple Mac OS X 10.10 (Yosemite) - 10.11 (El Capitan) (Darwin 14.0.0 - 15.0.0)
 Port used to ID: 	631
-OS Accuracy: 		 100 %
+OS Accuracy: 		100 %
 
 
 Nmap Service Information: 
@@ -106,7 +107,7 @@ Host IP			Port_ID		Status			Protocol	Service Information Retrieved
 
 127.0.0.1 		29754 		open 			tcp 
 
-127.0.0.1 		631 		  open 			tcp 		CUPS   2.1 
+127.0.0.1 		631 		open 			tcp 		CUPS   2.1 
 
 
 
@@ -170,7 +171,7 @@ Target address: 	127.0.0.1
 Target hostname: 	localhost
 Target OS: 		    Apple Mac OS X 10.10 (Yosemite) - 10.11 (El Capitan) (Darwin 14.0.0 - 15.0.0)
 Port used to ID: 	631
-OS Accuracy: 		 100 %
+OS Accuracy: 		100 %
 
 
 Nmap Service Information: 
@@ -239,7 +240,7 @@ Target address: 	127.0.0.1
 Target hostname: 	localhost
 Target OS: 		    Apple Mac OS X 10.10 (Yosemite) - 10.11 (El Capitan) (Darwin 14.0.0 - 15.0.0)
 Port used to ID: 	631
-OS Accuracy: 		 100 %
+OS Accuracy: 		100 %
 
 
 Nmap up hosts & open ports list: 
