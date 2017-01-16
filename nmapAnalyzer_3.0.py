@@ -26,8 +26,10 @@
 # list host and port only option  - 20/09/2016
 # multihost in one file handler   - 17/01/2017
 # multihost in one file handler   - 17/01/2017
-# NSE output			  - 17/01/2017
+# NSE output			          - 17/01/2017
 # better nmap report verification - 17/01/2017
+
+# hostscript support needed!!!
 
 import sys
 import os
@@ -354,12 +356,29 @@ def xmlParser (xmlFile):
 							except:
 								pass
 
+				except:
+					pass
+				try:
+					for hos in h.find_all('hostscript'):
+						if len(hos) > 0:
+							try:
+								for sc in hos.find_all('script'):
+									script = sc['id']
+									output = sc['output']
+									supportingData = []
+									for elem in hos.script.find_all('elem'):
+										supportingData.append(elem['key']+":"+elem.getText())
+									newScriptO = sip+":"+spip+":"+script
+									if newScriptO not in scriptOutput:
+										scriptOutput[newScriptO] = script, output, supportingData 
+									
+							except:
+								pass
+				except:
+					pass
 				
 
 
-
-				except:
-					pass
 
 
 #============================================================================================
