@@ -379,21 +379,23 @@ def processNmapFiles ():
 def outputOSResults():
 	
 
-	print "\nTarget OS Information: \n"
-	#pprint.pprint(osversionInfo)
+	if len(osversionInfo) > 0:	
+		print "\nTarget OS Information: \n"
+		#pprint.pprint(osversionInfo)
 
-	for target, data in sorted(osversionInfo.items()):
-		print "Target address: \t", target
-		print "Target hostname: \t", data[0]
-		print "Target OS: \t\t", data[1]
-		print "Port used to ID: \t", data[3]
-		print "OS Accuracy: \t\t", data[2],"%\n"
+		for target, data in sorted(osversionInfo.items()):
+			print "Target address: \t", target
+			print "Target hostname: \t", data[0]
+			print "Target OS: \t\t", data[1]
+			print "Port used to ID: \t", data[3]
+			print "OS Accuracy: \t\t", data[2],"%\n"
 
-	print "\nNSE Information & Enumeration: \n"
-	for target, data in sorted(scriptOutput.items()):
-		targetstr = target.rstrip(":")[0]
-		print "Target: \t", target
-		print "Output: \t", data[1], "\n" 
+	if len(scriptOutput) > 0:
+		print "\nNSE Information & Enumeration: \n"
+		for target, data in sorted(scriptOutput.items()):
+			targetstr = target.rstrip(":")[0]
+			print "Target: \t", target
+			print "Output: \t", data[1], "\n" 
 		
 
 
