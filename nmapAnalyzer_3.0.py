@@ -94,11 +94,11 @@ udp = False
 
 if args.tcp is True and args.udp is True:
 	print "----------------------------------------------------------------------------------------------"
-	sys.exit("[!] Both TCP and UDP cannot be flagged at the same time; remove both flags to return all protocols.")
+	sys.exit("[!]  Both TCP and UDP cannot be flagged at the same time; remove both flags to return all protocols.")
 
 elif args.tcp is True and args.udp is False:
 	tcp = True
-	print "[!] Filtering by TCP Services"
+	print "[!]  Filtering by TCP Services"
 
 elif args.udp is True and args.tcp is False:
 	udp = True
@@ -107,7 +107,7 @@ elif args.udp is True and args.tcp is False:
 # argument list
 out_list = False
 if args.list is True:
-	print "[!] List output has been selected."
+	print "[!]  List output has been selected."
 	out_list = True
 
 
