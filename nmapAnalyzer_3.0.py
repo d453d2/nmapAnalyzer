@@ -24,6 +24,7 @@
 # Added cache file using json     - 20/09/2016
 # list host and port only option  - 20/09/2016
 # multihost in one file handler   - 17/01/2017
+# improved nmap file verfying	  - 17/01/2017	
 
 
 import sys
@@ -131,18 +132,17 @@ if str(args.protocol) != "" :
 #============================================================================================
 
 # Check for cache file...
-cache_file = "analysedFiles_nmapAlayzer.json"
-if exedirectory.endswith("nmap"):
+cache_file = "analysedFiles_nmapAnalyzer.json"
 
-	if cache_file in os.listdir(os.getcwd()):
-		print "[!]  Using cached file..."
-		with open(cache_file) as f:
-			data = json.load(f)
-    	        file_list = data[0]
-    	        for target, info in data[1].items():
-    		        serviceInfo[target] = info
-    	        for host, info in data[2].items():
-    		        osversionInfo[host] = info
+if cache_file in os.listdir(os.getcwd()):
+	print "[!]  Using cached file: %s" % str(os.getcwd())+"/"+cache_file
+	with open(cache_file) as f:
+		data = json.load(f)
+        file_list = data[0]
+        for target, info in data[1].items():
+	        serviceInfo[target] = info
+        for host, info in data[2].items():
+	        osversionInfo[host] = info
 
 
 #print "service info"
@@ -166,66 +166,47 @@ except:
 # Global Vars
 nmapFiles = []
 nmapFile = ""
-searchstring = ip_target+"."
+searchstring = ip_target
+
+# function to test the file for an Nmap XML Report
+def checkNmapFile(nfile,searchstring):
+
+	doctype = False
+	sstring = False
+	if nfile.endswith(".xml"):
+		with open(nfile, 'r') as f:
+			for lines in f:
+				if '<!DOCTYPE nmaprun>' in lines:
+					doctype = True
+
+			if all_ip is False: 
+				for lines in f:					
+					if searchstring in lines:
+						sstring = True
+				if doctype is True and sstring is True:
+					nmapFiles.append(nfile)
+				
+			if all_ip is True and doctype is True:
+				nmapFiles.append(nfile)
+
+			
+
 
 # find nmap files in current project directory 
-# looks for nmap directory
-# if current directory is nmap it will use the current dir
-if exedirectory.endswith("nmap"):
+for checkfile in os.listdir(os.getcwd()) :
+		nfile = str(os.getcwd())+"/"+checkfile
+		checkNmapFile(nfile,searchstring)
 
-	for checkfile in os.listdir(os.getcwd()) :
-		if checkfile.endswith(".xml") :
-			if all_ip is False :
-
-				if searchstring in checkfile : # uses naming convention of having the target IP in the name of the file! eg. nmap.scantype.127.0.0.1.date.xml
-					nmapFiles.append(checkfile)
-					
-			elif all_ip is True :
-				nmapFiles.append(checkfile)
-
-	if len(nmapFiles) == 0 :
-		if all_ip is False:
-			print "[!]  Sorry, no nmap output files can be found for the specified target: %s " % ip_target
-			print "[!]  Check file naming conventions: ip in filename?"
-			sys.exit()
-
-		else: 
-			sys.exit("[!]  Sorry, no nmap output files can be found")
-
-
-else:
-	for directory in os.listdir(os.getcwd()) :	
-		#if isinstance(directory, str): # Check if instance is type string
-		#	print directory
-		if directory == 'nmap':
-			os.chdir(directory)
-
-			for checkfile in os.listdir(os.getcwd()) :
-				if checkfile.endswith(".xml") :
-					if all_ip is False :
-
-						if searchstring in checkfile :
-							nmapFiles.append(checkfile)
-
-					elif all_ip is True :
-						nmapFiles.append(checkfile)
-
-			if len(nmapFiles) == 0 :
-				if all_ip is False:
-					print "[!]  Sorry, no nmap output files can be found for the specified target: %s " % ip_target
-					print "[!]  Check file naming conventions: ip in filename?"
-					sys.exit()
-				else: 
-					sys.exit("[!]  Sorry, no nmap output files can be found")
-
-			break # no need to look for more directories!
-	
+if len(nmapFiles) == 0 :
+	if all_ip is False:
+		print "[!]  Sorry, no nmap output files can be found for the specified target: %s " % ip_target
+		sys.exit()
+	else: 
+		sys.exit("[!]  Sorry, no nmap output files can be found")
 
 
 # ...located nmap files 
 # could open them to check the content matches nmap!?
-
-# now time to parse them...
 
 
 ###################################
