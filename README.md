@@ -15,11 +15,11 @@ A couple of Python modules are needed to run the script, including python 2.x.
  - bs4: sudo pip install beautifulsoup4
  - lxml: pip install --upgrade lxml
  - if you dont have lxml you may need to install this too 
- - Lastly chmod +x nmapAnalyzer_2.0.py (mk it exec)
+ - Lastly chmod +x nmapAnalyzer_3.0.py (mk it exec)
 
 ```
-$./nmapAnalyzer_2.0.py -h
-usage: nmapAnalyzer_2.0.py [-h] [-i [TARGET_IPADDRESS]] [-t] [-u]
+$./nmapAnalyzer_3.0.py -h
+usage: nmapAnalyzer_3.0.py [-h] [-i [TARGET_IPADDRESS]] [-t] [-u]
                            [-p [PROTOCOL]] [-l] [--version]
 
 Parses NMAP XML output and summarises it, including server and service
@@ -57,13 +57,12 @@ Step 1: FYI
 Step 2: Run nmap
 	As above:
 	
-	sudo nmap -sSV -v -T5 -O --osscan-guess 127.0.0.1 -p- -oX nmap.syn-vers.127.0.0.1
+	sudo nmap -sSV -v -T5 -O --osscan-guess 127.0.0.1 -p1-1000 -oX nmap.syn-vers.127.0.0.1
 
 Step 3: Run the analyzer
 	
 	cd nmap
-	./nmapAnalyzer_2.0.py
-	
+	./nmapAnalyzer_3.0.py 
 ```
 ----------------------
 |-- Nmap Analyzer  --|
@@ -91,7 +90,7 @@ Target OS Information:
 
 Target address: 	127.0.0.1
 Target hostname: 	localhost
-Target OS: 		    Apple Mac OS X 10.10 (Yosemite) - 10.11 (El Capitan) (Darwin 14.0.0 - 15.0.0)
+Target OS: 		Apple Mac OS X 10.10 (Yosemite) - 10.11 (El Capitan) (Darwin 14.0.0 - 15.0.0)
 Port used to ID: 	631
 OS Accuracy: 		100 %
 
@@ -122,10 +121,8 @@ Host IP			Port_ID		Status			Protocol	Service Information Retrieved
 ---------------------------------------------------------------------------------------------
 
 ```
-Filter by target IP, tcp ports and http protocol services
-
 ```
-./nmapAnalyzer_2.0.py -i 127.0.0.1 -t -p http	
+./nmapAnalyzer_3.0.py -i 127.0.0.1 -t -p http	
 
 
 
@@ -141,7 +138,7 @@ Written by Sedz, released under Creative Commons License - 2015.
 [!]  Looking for Nmap outputs in current project... 
 [!]  Using '~/Infrastructure/active-recon/nmap' as project root. 
 [!]  Execution Date/time: 2016-09-22 17:57:34
-[!]  Filtering by TCP Services
+[!] Filtering by TCP Services
 [!]  Using cached file...
 
 ---------------------------------------------------------------------------------------------
@@ -169,7 +166,7 @@ Target OS Information:
 
 Target address: 	127.0.0.1
 Target hostname: 	localhost
-Target OS: 		    Apple Mac OS X 10.10 (Yosemite) - 10.11 (El Capitan) (Darwin 14.0.0 - 15.0.0)
+Target OS: 		Apple Mac OS X 10.10 (Yosemite) - 10.11 (El Capitan) (Darwin 14.0.0 - 15.0.0)
 Port used to ID: 	631
 OS Accuracy: 		100 %
 
@@ -197,7 +194,7 @@ Port_ID		Status			Protocol	Service Information Retrieved
 Last example, as list form (useful for other tools...)
 
 ```
-./nmapAnalyzer_2.0.py -i 127.0.0.1 -l -t
+./nmapAnalyzer_3.0.py -i 127.0.0.1 -l -t
 
 
 
@@ -213,8 +210,8 @@ Written by Sedz, released under Creative Commons License - 2015.
 [!]  Looking for Nmap outputs in current project... 
 [!]  Using '~/Infrastructure/active-recon/nmap' as project root. 
 [!]  Execution Date/time: 2016-09-22 17:59:05
-[!]  Filtering by TCP Services
-[!]  List output has been selected.
+[!] Filtering by TCP Services
+[!] List output has been selected.
 [!]  Using cached file...
 
 ---------------------------------------------------------------------------------------------
@@ -238,7 +235,7 @@ Target OS Information:
 
 Target address: 	127.0.0.1
 Target hostname: 	localhost
-Target OS: 		    Apple Mac OS X 10.10 (Yosemite) - 10.11 (El Capitan) (Darwin 14.0.0 - 15.0.0)
+Target OS: 		Apple Mac OS X 10.10 (Yosemite) - 10.11 (El Capitan) (Darwin 14.0.0 - 15.0.0)
 Port used to ID: 	631
 OS Accuracy: 		100 %
 
@@ -263,5 +260,4 @@ Nmap up hosts & open ports list:
 
 ```
 Hope you enjoy using it.
-
 
