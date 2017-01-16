@@ -178,11 +178,10 @@ def checkNmapFile(nfile,searchstring):
 			for lines in f:
 				if '<!DOCTYPE nmaprun>' in lines:
 					doctype = True
+				elif searchstring in lines:
+					sstring = True
 
-			if all_ip is False: 
-				for lines in f:					
-					if searchstring in lines:
-						sstring = True
+			if all_ip is False: 			
 				if doctype is True and sstring is True:
 					nmapFiles.append(nfile)
 				
