@@ -56,7 +56,7 @@ parser.add_argument('-u', action='store_true', default=False, dest='udp', help='
 parser.add_argument('-p', action='store', nargs="?", dest="protocol", default="", help="Returns results for service type eg: [nmapAnalyzer.py -p http]")
 parser.add_argument('-l', action='store_true', default=False, dest="list", help="Returns results in list format eg: [nmapAnalyzer.py -l]")
 #parser.add_argument('-f', action='store', nargs="?", default="", help="Creates output files, useful for scanning and further scripting!")
-parser.add_argument('--version', action='version', version="%(prog)s 2.0 written by Sedz")
+parser.add_argument('--version', action='version', version="%(prog)s 3.0 written by Sedz")
 
 #============================================================================================
 
