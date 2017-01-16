@@ -417,7 +417,11 @@ def outputOSResults():
 			for target, data in sorted(scriptOutput.items()):
 				targetstr = target.rstrip(":")[0]
 				print "Target: \t", target
-				print "Output: \t", data[1], "\n" 
+				print "Output: \t", data[1], 
+				print "SupData: \t" 
+				for i in data[2]:
+					print "\t\t" + str(i)
+				print "\n" 
 
 	elif all_ip is False:
 		if len(osversionInfo) > 0:	
@@ -438,7 +442,11 @@ def outputOSResults():
 				if target.split(":")[0] == ip_target:
 					targetstr = target.rstrip(":")[0]
 					print "Target: \t", target
-					print "Output: \t", data[1], "\n" 
+					print "Output: \t", data[1], 
+					print "SupData: \t" 
+					for i in data[2]:
+						print "\t\t" + str(i)
+					print "\n" 
 
 
 def outputServiceResults():
