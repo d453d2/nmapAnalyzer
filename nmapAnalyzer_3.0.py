@@ -25,7 +25,9 @@
 # Added cache file using json     - 20/09/2016
 # list host and port only option  - 20/09/2016
 # multihost in one file handler   - 17/01/2017
-
+# multihost in one file handler   - 17/01/2017
+# NSE output			  - 17/01/2017
+# better nmap report verification - 17/01/2017
 
 import sys
 import os
