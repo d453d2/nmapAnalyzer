@@ -24,7 +24,6 @@
 # Added cache file using json     - 20/09/2016
 # list host and port only option  - 20/09/2016
 # multihost in one file handler   - 17/01/2017
-# improved nmap file verfying	  - 17/01/2017	
 
 
 import sys
@@ -529,146 +528,147 @@ def outputServiceResults():
 						
 
 					else:
-						if tcp is True and data[1] == "tcp":
-							if len(target.split(":")[0]) <= 13:
-								print target.split(":")[1], "\t\t" ,  data[2], "\t\t\t", data[1], 
-							elif len(target.split(":")[0]) == 14:
-								print target.split(":")[1], "\t\t" ,  data[2], "\t\t\t", data[1], 			
-							else:
-								print target.split(":")[1], "\t\t" ,  data[2], "\t\t\t", data[1], 
-							#print target.split(":")[1] , "\t\t\t" ,  data[2], "\t\t\t", data[1], 
-							# checks for service info entries and prints!	
-							serviceFlag = False
-							if serviceFlag is False:
-								try:
-									if data[4]:
-										print "\t\t", data[4],
-										
-										try:
-											if data[5]:
-												print " ", data[5],
+						if target.split(":")[0] == ip_target:
+							if tcp is True and data[1] == "tcp":
+								if len(target.split(":")[0]) <= 13:
+									print target.split(":")[1], "\t\t" ,  data[2], "\t\t\t", data[1], 
+								elif len(target.split(":")[0]) == 14:
+									print target.split(":")[1], "\t\t" ,  data[2], "\t\t\t", data[1], 			
+								else:
+									print target.split(":")[1], "\t\t" ,  data[2], "\t\t\t", data[1], 
+								#print target.split(":")[1] , "\t\t\t" ,  data[2], "\t\t\t", data[1], 
+								# checks for service info entries and prints!	
+								serviceFlag = False
+								if serviceFlag is False:
+									try:
+										if data[4]:
+											print "\t\t", data[4],
+											
+											try:
+												if data[5]:
+													print " ", data[5],
 
-												try:
-													if data[6]:
-														print " ", data[6] , "\n"
-													else: 
+													try:
+														if data[6]:
+															print " ", data[6] , "\n"
+														else: 
+															print "\n"
+													except:
 														print "\n"
-												except:
+														pass
+												else:
 													print "\n"
-													pass
-											else:
+											
+											except:
 												print "\n"
+												pass
 										
-										except:
+										elif data[5]: 
+											print "\t\t", data[5], "\n"
+										
+										elif data[6]:
+											print "\t\t", data[6], "\n"				
+										
+										else: 
 											print "\n"
-											pass
 									
-									elif data[5]: 
-										print "\t\t", data[5], "\n"
-									
-									elif data[6]:
-										print "\t\t", data[6], "\n"				
-									
-									else: 
+									except:
 										print "\n"
-								
-								except:
-									print "\n"
-									pass
+										pass
 
-						if udp is True and data[1] == "udp":
-							if len(target.split(":")[0]) <= 13:
-								print target.split(":")[1], "\t\t" ,  data[2], "\t\t\t", data[1], 
-							elif len(target.split(":")[0]) == 14:
-								print target.split(":")[1], "\t\t" ,  data[2], "\t\t\t", data[1], 			
-							else:
-								print target.split(":")[1], "\t\t" ,  data[2], "\t\t\t", data[1], 
-							#print target.split(":")[1] , "\t\t\t" ,  data[2], "\t\t\t", data[1],  
-							# checks for service info entries and prints!	
-							serviceFlag = False
-							if serviceFlag is False:
-								try:
-									if data[4]:
-										print "\t\t", data[4],
-										
-										try:
-											if data[5]:
-												print " ", data[5],
+							if udp is True and data[1] == "udp":
+								if len(target.split(":")[0]) <= 13:
+									print target.split(":")[1], "\t\t" ,  data[2], "\t\t\t", data[1], 
+								elif len(target.split(":")[0]) == 14:
+									print target.split(":")[1], "\t\t" ,  data[2], "\t\t\t", data[1], 			
+								else:
+									print target.split(":")[1], "\t\t" ,  data[2], "\t\t\t", data[1], 
+								#print target.split(":")[1] , "\t\t\t" ,  data[2], "\t\t\t", data[1],  
+								# checks for service info entries and prints!	
+								serviceFlag = False
+								if serviceFlag is False:
+									try:
+										if data[4]:
+											print "\t\t", data[4],
+											
+											try:
+												if data[5]:
+													print " ", data[5],
 
-												try:
-													if data[6]:
-														print " ", data[6] , "\n"
-													else: 
+													try:
+														if data[6]:
+															print " ", data[6] , "\n"
+														else: 
+															print "\n"
+													except:
 														print "\n"
-												except:
+														pass
+												else:
 													print "\n"
-													pass
-											else:
+											
+											except:
 												print "\n"
+												pass
 										
-										except:
+										elif data[5]: 
+											print "\t\t", data[5], "\n"
+										
+										elif data[6]:
+											print "\t\t", data[6], "\n"				
+										
+										else: 
 											print "\n"
-											pass
 									
-									elif data[5]: 
-										print "\t\t", data[5], "\n"
-									
-									elif data[6]:
-										print "\t\t", data[6], "\n"				
-									
-									else: 
+									except:
 										print "\n"
-								
-								except:
-									print "\n"
-									pass
+										pass
 
-						if udp is False and tcp is False:
-							if len(target.split(":")[0]) <= 13:
-								print target.split(":")[1], "\t\t" ,  data[2], "\t\t\t", data[1], 
-							elif len(target.split(":")[0]) == 14:
-								print target.split(":")[1], "\t\t" ,  data[2], "\t\t\t", data[1], 			
-							else:
-								print target.split(":")[1], "\t\t" ,  data[2], "\t\t\t", data[1], 
-							#print target.split(":")[1] , "\t\t\t" ,  data[2], "\t\t\t", data[1], 
-							# checks for service info entries and prints!	
-							serviceFlag = False
-							if serviceFlag is False:
-								try:
-									if data[4]:
-										print "\t\t", data[4],
-										
-										try:
-											if data[5]:
-												print " ", data[5],
+							if udp is False and tcp is False:
+								if len(target.split(":")[0]) <= 13:
+									print target.split(":")[1], "\t\t" ,  data[2], "\t\t\t", data[1], 
+								elif len(target.split(":")[0]) == 14:
+									print target.split(":")[1], "\t\t" ,  data[2], "\t\t\t", data[1], 			
+								else:
+									print target.split(":")[1], "\t\t" ,  data[2], "\t\t\t", data[1], 
+								#print target.split(":")[1] , "\t\t\t" ,  data[2], "\t\t\t", data[1], 
+								# checks for service info entries and prints!	
+								serviceFlag = False
+								if serviceFlag is False:
+									try:
+										if data[4]:
+											print "\t\t", data[4],
+											
+											try:
+												if data[5]:
+													print " ", data[5],
 
-												try:
-													if data[6]:
-														print " ", data[6] , "\n"
-													else: 
+													try:
+														if data[6]:
+															print " ", data[6] , "\n"
+														else: 
+															print "\n"
+													except:
 														print "\n"
-												except:
+														pass
+												else:
 													print "\n"
-													pass
-											else:
+											
+											except:
 												print "\n"
+												pass
 										
-										except:
+										elif data[5]: 
+											print "\t\t", data[5], "\n"
+										
+										elif data[6]:
+											print "\t\t", data[6], "\n"				
+										
+										else: 
 											print "\n"
-											pass
 									
-									elif data[5]: 
-										print "\t\t", data[5], "\n"
-									
-									elif data[6]:
-										print "\t\t", data[6], "\n"				
-									
-									else: 
+									except:
 										print "\n"
-								
-								except:
-									print "\n"
-									pass
+										pass
 
 					
 
@@ -825,150 +825,150 @@ def outputServiceResults():
 						
 
 					else:
+						if target.split(":")[0] == ip_target:
+							if tcp is True and data[1] == "tcp":
+								if len(target.split(":")[0]) <= 13:
+									print target.split(":")[1], "\t\t" ,  data[2], "\t\t\t", data[1], 
+								elif len(target.split(":")[0]) == 14:
+									print target.split(":")[1], "\t\t" ,  data[2], "\t\t\t", data[1], 			
+								else:
+									print target.split(":")[1], "\t\t" ,  data[2], "\t\t\t", data[1], 
+								#print target.split(":")[1] , "\t\t\t" ,  data[2], "\t\t\t", data[1], 
+								serviceFlag = False
+								if serviceFlag is False:
+									try:
+										if data[4]:
+											print "\t\t", data[4],
+											
+											try:
+												if data[5]:
+													print " ", data[5],
 
-						if tcp is True and data[1] == "tcp":
-							if len(target.split(":")[0]) <= 13:
-								print target.split(":")[1], "\t\t" ,  data[2], "\t\t\t", data[1], 
-							elif len(target.split(":")[0]) == 14:
-								print target.split(":")[1], "\t\t" ,  data[2], "\t\t\t", data[1], 			
-							else:
-								print target.split(":")[1], "\t\t" ,  data[2], "\t\t\t", data[1], 
-							#print target.split(":")[1] , "\t\t\t" ,  data[2], "\t\t\t", data[1], 
-							serviceFlag = False
-							if serviceFlag is False:
-								try:
-									if data[4]:
-										print "\t\t", data[4],
-										
-										try:
-											if data[5]:
-												print " ", data[5],
-
-												try:
-													if data[6]:
-														print " ", data[6] , "\n"
-													else: 
+													try:
+														if data[6]:
+															print " ", data[6] , "\n"
+														else: 
+															print "\n"
+													except:
 														print "\n"
-												except:
+														pass
+												else:
 													print "\n"
-													pass
-											else:
+											
+											except:
 												print "\n"
+												pass
 										
-										except:
+										elif data[5]: 
+											print "\t\t", data[5], "\n"
+										
+										elif data[6]:
+											print "\t\t", data[6], "\n"				
+										
+										else: 
 											print "\n"
-											pass
 									
-									elif data[5]: 
-										print "\t\t", data[5], "\n"
-									
-									elif data[6]:
-										print "\t\t", data[6], "\n"				
-									
-									else: 
+									except:
 										print "\n"
-								
-								except:
-									print "\n"
-									pass
-							else:
-								sys.exit("[!]  No results match that requirement!")
+										pass
+								else:
+									sys.exit("[!]  No results match that requirement!")
 
-						if udp is True and data[1] == "udp":
-							if len(target.split(":")[0]) <= 13:
-								print target.split(":")[1], "\t\t" ,  data[2], "\t\t\t", data[1], 
-							elif len(target.split(":")[0]) == 14:
-								print target.split(":")[1], "\t\t" ,  data[2], "\t\t\t", data[1], 			
-							else:
-								print target.split(":")[1], "\t\t" ,  data[2], "\t\t\t", data[1], 
-							#print target.split(":")[1] , "\t\t\t" ,  data[2], "\t\t\t", data[1],  
-							serviceFlag = False
-							if serviceFlag is False:
-								try:
-									if data[4]:
-										print "\t\t", data[4],
-										
-										try:
-											if data[5]:
-												print " ", data[5],
+							if udp is True and data[1] == "udp":
+								if len(target.split(":")[0]) <= 13:
+									print target.split(":")[1], "\t\t" ,  data[2], "\t\t\t", data[1], 
+								elif len(target.split(":")[0]) == 14:
+									print target.split(":")[1], "\t\t" ,  data[2], "\t\t\t", data[1], 			
+								else:
+									print target.split(":")[1], "\t\t" ,  data[2], "\t\t\t", data[1], 
+								#print target.split(":")[1] , "\t\t\t" ,  data[2], "\t\t\t", data[1],  
+								serviceFlag = False
+								if serviceFlag is False:
+									try:
+										if data[4]:
+											print "\t\t", data[4],
+											
+											try:
+												if data[5]:
+													print " ", data[5],
 
-												try:
-													if data[6]:
-														print " ", data[6] , "\n"
-													else: 
+													try:
+														if data[6]:
+															print " ", data[6] , "\n"
+														else: 
+															print "\n"
+													except:
 														print "\n"
-												except:
+														pass
+												else:
 													print "\n"
-													pass
-											else:
+											
+											except:
 												print "\n"
+												pass
 										
-										except:
+										elif data[5]: 
+											print "\t\t", data[5], "\n"
+										
+										elif data[6]:
+											print "\t\t", data[6], "\n"				
+										
+										else: 
 											print "\n"
-											pass
 									
-									elif data[5]: 
-										print "\t\t", data[5], "\n"
-									
-									elif data[6]:
-										print "\t\t", data[6], "\n"				
-									
-									else: 
+									except:
 										print "\n"
-								
-								except:
-									print "\n"
-									pass
-							else:
-								sys.exit("[!]  No results match that requirement!")
+										pass
+								else:
+									sys.exit("[!]  No results match that requirement!")
 
-						if udp is False and tcp is False:
-							if len(target.split(":")[0]) <= 13:
-								print target.split(":")[1], "\t\t" ,  data[2], "\t\t\t", data[1], 
-							elif len(target.split(":")[0]) == 14:
-								print target.split(":")[1], "\t\t" ,  data[2], "\t\t\t", data[1], 			
-							else:
-								print target.split(":")[1], "\t\t" ,  data[2], "\t\t\t", data[1], 
-							#print target.split(":")[1] , "\t\t\t" ,  data[2], "\t\t\t", data[1], 
-							serviceFlag = False
-							if serviceFlag is False:
-								try:
-									if data[4]:
-										print "\t\t", data[4],
-										
-										try:
-											if data[5]:
-												print " ", data[5],
+							if udp is False and tcp is False:
+								if len(target.split(":")[0]) <= 13:
+									print target.split(":")[1], "\t\t" ,  data[2], "\t\t\t", data[1], 
+								elif len(target.split(":")[0]) == 14:
+									print target.split(":")[1], "\t\t" ,  data[2], "\t\t\t", data[1], 			
+								else:
+									print target.split(":")[1], "\t\t" ,  data[2], "\t\t\t", data[1], 
+								#print target.split(":")[1] , "\t\t\t" ,  data[2], "\t\t\t", data[1], 
+								serviceFlag = False
+								if serviceFlag is False:
+									try:
+										if data[4]:
+											print "\t\t", data[4],
+											
+											try:
+												if data[5]:
+													print " ", data[5],
 
-												try:
-													if data[6]:
-														print " ", data[6] , "\n"
-													else: 
+													try:
+														if data[6]:
+															print " ", data[6] , "\n"
+														else: 
+															print "\n"
+													except:
 														print "\n"
-												except:
+														pass
+												else:
 													print "\n"
-													pass
-											else:
+											
+											except:
 												print "\n"
+												pass
 										
-										except:
+										elif data[5]: 
+											print "\t\t", data[5], "\n"
+										
+										elif data[6]:
+											print "\t\t", data[6], "\n"				
+										
+										else: 
 											print "\n"
-											pass
 									
-									elif data[5]: 
-										print "\t\t", data[5], "\n"
-									
-									elif data[6]:
-										print "\t\t", data[6], "\n"				
-									
-									else: 
+									except:
 										print "\n"
-								
-								except:
-									print "\n"
-									pass
-							else:
-								sys.exit("[!]  No results match that requirement!")		
+										pass
+								else:
+									sys.exit("[!]  No results match that requirement!")		
 
 
 			except:
