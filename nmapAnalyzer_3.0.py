@@ -72,7 +72,7 @@ exedirectory = os.getcwd()
 #logging.basicConfig(level=logging.DEBUG, format=' %(asctime)s - %(levelname)s - %(message)s')
 serviceInfo = {} # ipaddress:port, protocol, state, servicename, product, version, extrainfo - key is port number
 osversionInfo = {} # hostname, onName, guessAccuracy, portDiscovered - key is ipaddress
-
+scriptOutput = {} # IP, port, script, output
 
 print "\n\n"
 print "----------------------"
@@ -143,6 +143,8 @@ if cache_file in os.listdir(os.getcwd()):
 	        serviceInfo[target] = info
         for host, info in data[2].items():
 	        osversionInfo[host] = info
+	for target, info in data[3].items():
+		scriptOutput[target] = info
 
 
 #print "service info"
@@ -265,10 +267,10 @@ def xmlParser (xmlFile):
 																		if ports.service.get('version') is not None:
 																			try:
 																				if ports.service.get('extrainfo') is not None:
-															
+
 																					if newPort not in serviceInfo:
 
-																						serviceInfo[newPort] = str(ports['portid']) , str(ports['protocol']) , str(ports.state['state']) , str(ports.service['name']) , str(ports.service['product']) , str(ports.service['version']) , str(ports.service['extrainfo']) 
+																								serviceInfo[newPort] = str(ports['portid']) , str(ports['protocol']) , str(ports.state['state']) , str(ports.service['name']) , str(ports.service['product']) , str(ports.service['version']) , str(ports.service['extrainfo'])
 
 																				else:
 																					if newPort not in serviceInfo:
@@ -300,33 +302,59 @@ def xmlParser (xmlFile):
 											except: Pass
 									except: Pass					
 
-						try:			
-							if h.find_all("os") is not None:
+				except:
+					pass
+				
+				try:			
+					if h.find_all("os") is not None:
 
-								host = str(h.address['addr'])
+						host = str(h.address['addr'])
 
 
-								for osversion in h.find_all("os"):
+						for osversion in h.find_all("os"):
 
-									# modified to acquire hostname
-									if hostnames.hostname['name'] is not None:
-										hostname = str(hostnames.hostname['name'])
-									elif hostname == "" or hostname == "<hostname-not-resolved>":
-										hostname = "<hostname-not-resolved>"
+							# modified to acquire hostname
+							if hostnames.hostname['name'] is not None:
+								hostname = str(hostnames.hostname['name'])
+							elif hostname == "" or hostname == "<hostname-not-resolved>":
+								hostname = "<hostname-not-resolved>"
 									
-									if int(osversion.osmatch['accuracy']) > int(guessAccuracy):
-										guessAccuracy = osversion.osmatch['accuracy']
-										osName = str(osversion.osmatch['name']) 
-										osAccuracy = str(osversion.osmatch['accuracy'])
-										osPort = str(osversion.portused['portid']) 
+							if int(osversion.osmatch['accuracy']) > int(guessAccuracy):
+								guessAccuracy = osversion.osmatch['accuracy']
+								osName = str(osversion.osmatch['name']) 
+								osAccuracy = str(osversion.osmatch['accuracy'])
+								osPort = str(osversion.portused['portid']) 
 
-								# add host to osverison table
-								if host not in osversionInfo:
-									if osName != "":
-										if osAccuracy != "" :
-											osversionInfo[host] = hostname , osName , osAccuracy , osPort
-						except:
-							pass
+							# add host to osverison table
+							if host not in osversionInfo:
+								if osName != "":
+									if osAccuracy != "" :
+										osversionInfo[host] = hostname , osName , osAccuracy , osPort
+				except:
+					pass
+
+				try:
+					if h.find_all('port') is not None:
+						for a in h.find_all('address'):
+							if a['addrtype'] == "ipv4":
+								sip = str(a['addr'])
+
+						for sps in h.find_all('port'):
+							spip = sps['portid']
+							try:
+								for sc in sps.find_all('script'):
+									script = sc['id']
+									output = sc['output']
+									newScriptO = sip+":"+spip+":"+script
+									if newScriptO not in scriptOutput:
+										scriptOutput[newScriptO] = script, output 
+									
+							except:
+								pass
+
+				
+
+
 
 				except:
 					pass
@@ -354,12 +382,18 @@ def outputOSResults():
 	print "\nTarget OS Information: \n"
 	#pprint.pprint(osversionInfo)
 
-	for target, data in osversionInfo.items():
+	for target, data in sorted(osversionInfo.items()):
 		print "Target address: \t", target
 		print "Target hostname: \t", data[0]
 		print "Target OS: \t\t", data[1]
 		print "Port used to ID: \t", data[3]
 		print "OS Accuracy: \t\t", data[2],"%\n"
+
+	print "\nNSE Information & Enumeration: \n"
+	for target, data in sorted(scriptOutput.items()):
+		targetstr = target.rstrip(":")[0]
+		print "Target: \t", target
+		print "Output: \t", data[1], "\n" 
 		
 
 
@@ -1075,6 +1109,7 @@ with open(cache_file, 'a') as f:
 	jsonOut.append(fileList)
 	jsonOut.append(serviceInfo)
 	jsonOut.append(osversionInfo)
+	jsonOut.append(scriptOutput)
 	f.write(json.dumps(jsonOut)) # processed files
 	f.close()
 
